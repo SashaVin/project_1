@@ -8,9 +8,9 @@ def bindiv(lst, number, l):
         return None
     if number >= lst[len(lst) // 2]:
         l += len(lst) // 2
-        return bindiv( lst[int((len(lst)) / 2):len(lst) + 1], number, l)
-    elif number < int(lst[int(len(lst) / 2)]):
-        return bindiv(lst[:int(len(lst) / 2)], number, l)
+        return bindiv( lst[((len(lst)) // 2):len(lst) + 1], number, l)
+    elif number < lst[int(len(lst) // 2)]:
+        return bindiv(lst[:len(lst) // 2], number, l)
 
 
 number = int(input())
