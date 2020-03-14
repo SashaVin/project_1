@@ -1,21 +1,16 @@
 import random as r
 import time as t
 
-def bindiv(lst, number, len_):
-    if len_ == 1 and lst[0] != number:
+def bindiv(lst, number, l):
+    if len(lst) == 1 and number == lst[0]:
+        return l + 1
+    elif len(lst) == 1 and number != lst[0]:
         return None
-    if len_ == 1:
-        return 1
-    if len_ % 2 == 1:
-        if lst[(len_ // 2 + 1):].count(number) > 0:
-            return len_ // 2 + 1 + bindiv(lst[(len_ // 2 + 1):], number, len(lst[(len_ // 2 + 1):]))
-        else:
-            return bindiv(lst[:(len_ // 2 + 1)], number, len(lst[:(len_ // 2 + 1)]))
-    else:
-        if lst[(len_ // 2):].count(number) > 0:
-            return len_ // 2 + 1 + bindiv(lst[(len_ // 2):], number, len(lst[(len_ // 2):]))
-        else:
-            return bindiv(lst[:(len_ // 2)], number, len(lst[:(len_ // 2)]))
+    if number >= lst[len(lst) // 2]:
+        l += len(lst) // 2
+        return bindiv( lst[int((len(lst)) / 2):len(lst) + 1], number, l)
+    elif number < int(lst[int(len(lst) / 2)]):
+        return bindiv(lst[:int(len(lst) / 2)], number, l)
 
 
 number = int(input())
@@ -24,11 +19,11 @@ a2 = r.randint(3276, 32768)
 lst = []
 for i in range(a1, a2):
     lst.append(i)
-
+l = 0
 
 t2 = t.perf_counter()
 
-print(bindiv(lst, number, len(lst)))
+print(bindiv(lst, number, l))
 
 t3 = t.perf_counter()
 
@@ -37,18 +32,11 @@ while len(lst) > 1:
     if lst.count(number) == 0:
         f = None
         break
-    if len(lst) % 2 == 1:
-        if lst[(len(lst) // 2 + 1):].count(number) > 0:
-            f += len(lst) // 2 + 1
-            lst = lst[(len(lst) // 2 + 1):]
-        else:
-            lst = lst[:(len(lst) // 2 + 1)]
-    else:
-        if lst[(len(lst) // 2):].count(number) > 0:
-            f += len(lst) // 2 + 1
-            lst = lst[(len(lst) // 2):]
-        else:
-            lst = lst[:(len(lst) // 2)]
+    if number < lst[len(lst) // 2]:
+        lst = lst[:len(lst) // 2]
+    elif number >= lst[len(lst) // 2]:
+        f += len(lst) // 2
+        lst = lst[(len(lst) // 2):len(lst) + 1]
 t4 = t.perf_counter()
 print(f)
 print('Время выполнения рекурсивной функции:', ':{:.8f}'. format(t3 - t2))
